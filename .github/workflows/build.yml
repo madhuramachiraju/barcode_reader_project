@@ -1,0 +1,34 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        brew install opencv
+        brew install zxing-cpp
+        brew install libdmtx
+        brew install cmake
+    
+    - name: Create build directory
+      run: mkdir build
+      
+    - name: Configure
+      run: |
+        cd build
+        cmake ..
+        
+    - name: Build
+      run: |
+        cd build
+        make 
